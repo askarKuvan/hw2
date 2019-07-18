@@ -9,6 +9,10 @@ for (var i = 0; i < btns.length; i++)
         this.className += " active";
     });
 }
+tab_ids = ["content_dialer","content_contactList","content_addContact","content_testGestures"];
+tab_names = ["dialer","contactList","addContact","testGestures"]
+num_of_tabs = 4;
+current_tab = 0;
 
 // dial functionality:
 var number = "";
@@ -82,6 +86,7 @@ $("#dialer").click(function()
     $("#content_contactList").hide(); // hide the element with ID "otherElement"
     $("#content_addContact").hide(); // hide the element with ID "otherElement"
 	$("#content_testGestures").hide(); // hide the element with ID "otherElement"
+  current_tab = 0;
 
 });
 
@@ -91,6 +96,7 @@ $("#contactList").click(function()
     $("#content_dialer").hide(); // hide the element with ID "otherElement"
     $("#content_addContact").hide(); // hide the element with ID "otherElement"
 	$("#content_testGestures").hide(); // hide the element with ID "otherElement"
+  current_tab = 1;
 
 });
 
@@ -100,6 +106,7 @@ $("#addContact").click(function()
     $("#content_contactList").hide(); // hide the element with ID "otherElement"
     $("#content_dialer").hide(); // hide the element with ID "otherElement"
 	$("#content_testGestures").hide(); // hide the element with ID "otherElement"
+  current_tab = 2;
 
 });
 
@@ -109,7 +116,7 @@ $("#testGestures").click(function()
     $("#content_contactList").hide(); // hide the element with ID "otherElement"
     $("#content_dialer").hide(); // hide the element with ID "otherElement"
 	$("#content_addContact").hide(); // hide the element with ID "otherElement"
-
+  current_tab = 3;
 });
 //*/
 
@@ -117,7 +124,6 @@ $("#testGestures").click(function()
 // Gesture functionality:
 var downX=0;
 var downY=0;
-var tolerance=10;
 
 $("#gesture_area").mousedown(function(event)
 {
@@ -132,8 +138,7 @@ $("#gesture_area").mouseup(function(event)
 {
 	upX = event.pageX;
 	upY = event.pageY;
-	
-	/*
+
 	if(upX<downX)
 	{
 		$("#gesture_output").val("Swipe left");
@@ -146,19 +151,58 @@ $("#gesture_area").mouseup(function(event)
 	{
 		$("#gesture_output").val("Mouse up");
 	}
-	//*/
-	if(upY<downY)
-	{
-		$("#gesture_output").val("Swipe up");
-	}
-	else if(upY>downY)
-	{
-		$("#gesture_output").val("Swipe down");
-	}
-	else
-	{
-		$("#gesture_output").val("Mouse up");
-	}
-	
 });
 
+
+// trackpad functionality:
+var trackpad_downX=0;
+var trackpad_downY=0;
+$("#trackpad").mousedown(function(event)
+{
+	trackpad_downX = event.pageX;
+	trackpad_downY = event.pageY;
+});
+
+$("#trackpad").mouseup(function(event)
+{
+	trackpad_upX = event.pageX;
+	trackpad_upY = event.pageY;
+
+	if(trackpad_upX<trackpad_downX)
+	{
+		$("#gesture_output").val("Swipe left");
+    if(current_tab==0)
+      current_tab = num_of_tabs;
+    current_tab = (current_tab-1)%num_of_tabs;
+    var activate_button = tab_names[current_tab];
+    $('#'+activate_button).trigger('click');
+	}
+	else if(trackpad_upX>trackpad_downX)
+	{
+    $("#gesture_output").val("Swipe left");
+    current_tab = (current_tab+1)%num_of_tabs;
+    var activate_button = tab_names[current_tab];
+    $('#'+activate_button).trigger('click');
+	}
+
+});
+
+$(document).keydown(function(event){
+
+    var key = (event.keyCode ? event.keyCode : event.which);
+    if(key==37)
+    {
+      if(current_tab==0)
+        current_tab = num_of_tabs;
+      current_tab = (current_tab-1)%num_of_tabs;
+      var activate_button = tab_names[current_tab];
+      $('#'+activate_button).trigger('click');
+    }
+    else if(key==39)
+    {
+      current_tab = (current_tab+1)%num_of_tabs;
+      var activate_button = tab_names[current_tab];
+      $('#'+activate_button).trigger('click');
+
+    }
+});

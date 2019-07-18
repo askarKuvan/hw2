@@ -8,17 +8,22 @@ li
 	width: 450px;
 }
 
+#main
+{
+	height: 500px;
+}
+
 .tabs
 {
 	display: flex;
 }
 
-.tabs,.content, .form-name, #dial_name, .add_row, .add_input, .dial_row, .dial_row_action
+.tabs,.content, .form-name, #dial_number, .add_row, .add_input, .dial_row, .dial_row_action, #gesture_output
 {
 	width: 100%;
 }
 
-#dial_table, #addContact_div
+#dial_table, #addContact_div, #gestures_div
 {
 	width: 400px;
 	margin: auto;
@@ -79,13 +84,20 @@ li
 
 #gesture_area
 {
-	width: 300px;
-	height: 300px;
+	width: 400px;
+	height: 400px;
 	background-color: silver;
 }
 
-#gesture_output
+#gesture_output, #trackpad_label
 {
 	text-align: center;
 }
-	
+
+#trackpad
+{
+	width: 450px;
+	height: 80px;
+	background-color: silver;
+	border: 2px  solid black;
+}
