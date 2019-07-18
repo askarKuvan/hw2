@@ -170,7 +170,7 @@ $("#trackpad").mouseup(function(event)
 
 	if(trackpad_upX<trackpad_downX)
 	{
-		$("#gesture_output").val("Swipe left");
+		
     if(current_tab==0)
       current_tab = num_of_tabs;
     current_tab = (current_tab-1)%num_of_tabs;
@@ -179,7 +179,7 @@ $("#trackpad").mouseup(function(event)
 	}
 	else if(trackpad_upX>trackpad_downX)
 	{
-    $("#gesture_output").val("Swipe left");
+    
     current_tab = (current_tab+1)%num_of_tabs;
     var activate_button = tab_names[current_tab];
     $('#'+activate_button).trigger('click');
